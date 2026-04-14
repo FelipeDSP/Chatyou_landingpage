@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Outfit } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import Script from 'next/script'
 import './globals.css'
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
@@ -13,21 +14,8 @@ export const metadata: Metadata = {
   description: 'Centralize WhatsApp, Instagram, Messenger e E-mail em um único painel. Ganhe velocidade, colaboração em equipe e relatórios completos.',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/icon.svg',
+    apple: '/icon.svg',
   },
 }
 
@@ -41,6 +29,23 @@ export default function RootLayout({
       <body className={`${geist.variable} ${outfit.variable} font-sans antialiased`}>
         {children}
         <Analytics />
+        <Script id="chatwoot" strategy="afterInteractive">
+          {`
+            (function(d,t) {
+              var BASE_URL="https://app.chatyou.chat";
+              var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+              g.src=BASE_URL+"/packs/js/sdk.js";
+              g.async = true;
+              s.parentNode.insertBefore(g,s);
+              g.onload=function(){
+                window.chatwootSDK.run({
+                  websiteToken: 's9wnTns4DNYjC4FdARLPyqWu',
+                  baseUrl: BASE_URL
+                })
+              }
+            })(document,"script");
+          `}
+        </Script>
       </body>
     </html>
   )
