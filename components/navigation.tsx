@@ -10,9 +10,9 @@ export function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const navLinks = [
-    { href: "#features", label: "Soluções" },
-    { href: "#pricing", label: "Planos" },
-    { href: "#contact", label: "Contato" },
+    { href: "/#features", label: "Soluções" },
+    { href: "/#pricing", label: "Planos" },
+    { href: "/#contact", label: "Contato" },
   ]
 
   return (
