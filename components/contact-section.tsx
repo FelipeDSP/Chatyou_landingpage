@@ -1,11 +1,36 @@
 "use client"
 
+import { useEffect } from "react"
 import { motion } from "framer-motion"
 import { Mail, MessageCircle, Instagram, Facebook, Send } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { ShinyButton } from "@/components/ui/shiny-button"
 
 export function ContactSection() {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (typeof (window as any).MauticSDKLoaded == 'undefined') {
+        (window as any).MauticSDKLoaded = true;
+        const head = document.getElementsByTagName('head')[0];
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'http://email.client4you.com.br/media/js/mautic-form.js?v68a6cca5';
+        script.onload = function() {
+            if ((window as any).MauticSDK) {
+                (window as any).MauticSDK.onLoad();
+            }
+        };
+        head.appendChild(script);
+        (window as any).MauticDomain = 'http://email.client4you.com.br';
+        (window as any).MauticLang = {
+            'submittingMessage': "Por favor, aguarde..."
+        };
+      } else if (typeof (window as any).MauticSDK != 'undefined') {
+        (window as any).MauticSDK.onLoad();
+      }
+    }
+  }, []);
+
   return (
     <section className="py-20 bg-muted/30" id="contact">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -50,7 +75,7 @@ export function ContactSection() {
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-1">E-mail</h3>
-                <p className="text-muted-foreground mb-2">Envie suas dúvidas detalhadas</p>
+                <p className="text-muted-foreground mb-2">Contato direto para suporte e comercial</p>
                 <a href="mailto:contato@estudyou.com" className="text-primary font-medium hover:underline text-lg">
                   contato@estudyou.com
                 </a>
@@ -84,14 +109,19 @@ export function ContactSection() {
             transition={{ duration: 0.5 }}
           >
             <Card className="p-8 border-border">
-              <form action="https://formsubmit.co/contato@estudyou.com" method="POST" className="space-y-6">
-                <input type="hidden" name="_next" value="/#contact" />
-                <input type="hidden" name="_captcha" value="false" />
+              <div className="mb-6">
+                <h3 className="text-2xl font-semibold mb-2">Fale Conosco</h3>
+                <p className="text-muted-foreground">Envie suas dúvidas detalhadas preenchendo o formulário abaixo.</p>
+              </div>
+              <form autoComplete="false" role="form" method="post" action="http://email.client4you.com.br/form/submit?formId=1" id="mauticform_landingpagechatyou" data-mautic-form="landingpagechatyou" encType="multipart/form-data" className="space-y-6">
+                <div className="mauticform-error text-red-500 text-sm font-medium mb-2" id="mauticform_landingpagechatyou_error"></div>
+                <div className="mauticform-message text-green-500 text-sm font-medium mb-2" id="mauticform_landingpagechatyou_message"></div>
+                
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium">Nome Completo</label>
+                  <label htmlFor="mauticform_input_landingpagechatyou_texto_resposta_curta" className="text-sm font-medium">Nome Completo</label>
                   <input
-                    id="name"
-                    name="name"
+                    id="mauticform_input_landingpagechatyou_texto_resposta_curta"
+                    name="mauticform[texto_resposta_curta]"
                     type="text"
                     required
                     placeholder="Seu nome"
@@ -99,10 +129,10 @@ export function ContactSection() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium">E-mail</label>
+                  <label htmlFor="mauticform_input_landingpagechatyou_email" className="text-sm font-medium">E-mail</label>
                   <input
-                    id="email"
-                    name="email"
+                    id="mauticform_input_landingpagechatyou_email"
+                    name="mauticform[email]"
                     type="email"
                     required
                     placeholder="seu@email.com"
@@ -110,23 +140,27 @@ export function ContactSection() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium">Mensagem</label>
+                  <label htmlFor="mauticform_input_landingpagechatyou_mensagem" className="text-sm font-medium">Mensagem</label>
                   <textarea
-                    id="message"
-                    name="message"
+                    id="mauticform_input_landingpagechatyou_mensagem"
+                    name="mauticform[mensagem]"
                     required
                     rows={4}
                     placeholder="Como podemos ajudar?"
                     className="w-full p-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
                   ></textarea>
                 </div>
-                <ShinyButton type="submit" className="w-full justify-center text-base">
+                <ShinyButton type="submit" name="mauticform[submit]" id="mauticform_input_landingpagechatyou_submit" className="w-full justify-center text-base">
                     Enviar Mensagem
                     <Send className="w-4 h-4 ml-2" />
                 </ShinyButton>
                 <p className="text-xs text-muted-foreground text-center mt-2">
                   Seus dados estão protegidos e não serão compartilhados.
                 </p>
+
+                <input type="hidden" name="mauticform[formId]" id="mauticform_landingpagechatyou_id" value="1" />
+                <input type="hidden" name="mauticform[return]" id="mauticform_landingpagechatyou_return" value="" />
+                <input type="hidden" name="mauticform[formName]" id="mauticform_landingpagechatyou_name" value="landingpagechatyou" />
               </form>
             </Card>
           </motion.div>
