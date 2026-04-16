@@ -14,14 +14,14 @@ export function ContactSection() {
         const head = document.getElementsByTagName('head')[0];
         const script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'http://email.client4you.com.br/media/js/mautic-form.js?v68a6cca5';
+        script.src = 'https://email.client4you.com.br/media/js/mautic-form.js?v68a6cca5';
         script.onload = function() {
             if ((window as any).MauticSDK) {
                 (window as any).MauticSDK.onLoad();
             }
         };
         head.appendChild(script);
-        (window as any).MauticDomain = 'http://email.client4you.com.br';
+        (window as any).MauticDomain = 'https://email.client4you.com.br';
         (window as any).MauticLang = {
             'submittingMessage': "Por favor, aguarde..."
         };
@@ -113,7 +113,7 @@ export function ContactSection() {
                 <h3 className="text-2xl font-semibold mb-2">Fale Conosco</h3>
                 <p className="text-muted-foreground">Envie suas dúvidas detalhadas preenchendo o formulário abaixo.</p>
               </div>
-              <form autoComplete="false" role="form" method="post" action="http://email.client4you.com.br/form/submit?formId=1" id="mauticform_landingpagechatyou" data-mautic-form="landingpagechatyou" encType="multipart/form-data" className="space-y-6">
+              <form autoComplete="false" role="form" method="post" action="https://email.client4you.com.br/form/submit?formId=1" id="mauticform_landingpagechatyou" data-mautic-form="landingpagechatyou" encType="multipart/form-data" className="space-y-6">
                 <div className="mauticform-error text-red-500 text-sm font-medium mb-2" id="mauticform_landingpagechatyou_error"></div>
                 <div className="mauticform-message text-green-500 text-sm font-medium mb-2" id="mauticform_landingpagechatyou_message"></div>
                 
